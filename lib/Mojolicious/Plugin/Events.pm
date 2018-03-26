@@ -1,12 +1,18 @@
 package Mojolicious::Plugin::Events;
+use Mojo::Base 'Mojolicious::Plugin';
 
 use 5.006;
 use strict;
 use warnings FATAL => 'all';
 
+use Scalar::Util qw(weaken);
+
+use Mojolicious::Plugin::Events::Dispatcher;
+use Mojolicious::Plugin::Events::Listeners;
+
 =head1 NAME
 
-Mojolicious::Plugin::Events - The great new Mojolicious::Plugin::Events!
+Mojolicious::Plugin::Events - A plugin for dispatching and handling sync/async events
 
 =head1 VERSION
 
@@ -25,28 +31,32 @@ Perhaps a little code snippet.
 
     use Mojolicious::Plugin::Events;
 
-    my $foo = Mojolicious::Plugin::Events->new();
-    ...
+    # register the plugin
+    $app->plugin('Events' => ['namespaces' => 'MyApp::Listeners']);
 
-=head1 EXPORT
-
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
+    # dispatch event
+    $app->events->dispatch(say => 'Hello, World!');
 
 =head1 SUBROUTINES/METHODS
 
-=head2 function1
+=head2 register
+
+Register the plugin
 
 =cut
 
-sub function1 {
-}
+sub register {
+    my ($self, $app, $config) = (@_);
 
-=head2 function2
+    my $listeners = Mojolicious::Plugin::Events::Listeners->new(app => $app, namespaces => $config->{ namespaces });
+    weaken $listeners->{ app };
 
-=cut
+    $app->helper(listeners => sub { $listeners });
 
-sub function2 {
+    my $events = Mojolicious::Plugin::Events::Dispatcher->new(app => $app);
+    weaken $events->{ app };
+
+    $app->helper(events => sub { $events });
 }
 
 =head1 AUTHOR
