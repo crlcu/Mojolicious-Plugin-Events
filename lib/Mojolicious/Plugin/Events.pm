@@ -16,11 +16,11 @@ Mojolicious::Plugin::Events - A plugin for dispatching and handling sync/async e
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 
 =head1 SYNOPSIS
