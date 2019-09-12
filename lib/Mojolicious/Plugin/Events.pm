@@ -5,10 +5,7 @@ use 5.006;
 use strict;
 use warnings FATAL => 'all';
 
-use Scalar::Util qw(weaken);
-
-use Mojolicious::Plugin::Events::Dispatcher;
-use Mojolicious::Plugin::Events::Listeners;
+use Mojo::Events;
 
 =head1 NAME
 
@@ -16,11 +13,11 @@ Mojolicious::Plugin::Events - A plugin for dispatching and handling sync/async e
 
 =head1 VERSION
 
-Version 0.02
+Version 0.3.2
 
 =cut
 
-our $VERSION = '0.3.1';
+our $VERSION = '0.3.2';
 
 
 =head1 SYNOPSIS
@@ -48,15 +45,10 @@ Register the plugin
 sub register {
     my ($self, $app, $config) = (@_);
 
-    my $listeners = Mojolicious::Plugin::Events::Listeners->new(app => $app, namespaces => $config->{ namespaces });
-    weaken $listeners->{ app };
+    my $events = Mojo::Events->new(app => $app, namespaces => $config->{ namespaces });
 
-    $app->helper(listeners => sub { $listeners });
-
-    my $events = Mojolicious::Plugin::Events::Dispatcher->new(app => $app);
-    weaken $events->{ app };
-
-    $app->helper(events => sub { $events });
+    $app->helper(events => sub { $events->dispatcher });
+    $app->helper(listeners => sub { $events->listeners });
 }
 
 =head1 AUTHOR
