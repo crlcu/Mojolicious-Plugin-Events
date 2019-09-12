@@ -11,3 +11,6 @@ Revision history for Mojolicious-Plugin-GetSentry
 
 0.3.2   2019-09-12
         Split into Mojo::Events and Mojolicious::Plugin::Events
+
+0.3.3   2019-09-12
+        Attach only events to the mojolicious app

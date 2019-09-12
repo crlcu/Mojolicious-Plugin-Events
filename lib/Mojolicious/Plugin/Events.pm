@@ -17,7 +17,7 @@ Version 0.3.2
 
 =cut
 
-our $VERSION = '0.3.2';
+our $VERSION = '0.3.3';
 
 
 =head1 SYNOPSIS
@@ -48,7 +48,6 @@ sub register {
     my $events = Mojo::Events->new(app => $app, namespaces => $config->{ namespaces });
 
     $app->helper(events => sub { $events->dispatcher });
-    $app->helper(listeners => sub { $events->listeners });
 }
 
 =head1 AUTHOR
