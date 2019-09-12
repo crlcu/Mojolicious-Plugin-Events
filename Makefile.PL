@@ -11,7 +11,7 @@ WriteMakefile(
     AUTHOR           => q{Adrian Crisan <adrian.crisan88@gmail.com>},
     VERSION_FROM     => 'lib/Mojolicious/Plugin/Events.pm',
     ABSTRACT_FROM    => 'lib/Mojolicious/Plugin/Events.pm',
-    LICENSE          => 'MIT',
+    LICENSE          => 'artistic_2',
     PL_FILES         => {},
     MIN_PERL_VERSION => 5.006,
     CONFIGURE_REQUIRES => {
