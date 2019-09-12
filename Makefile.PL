@@ -24,6 +24,7 @@ WriteMakefile(
     },
     PREREQ_PM => {
         'Mojolicious' => 0,
+        'Mojo::Events' => 0,
     },
     META_MERGE   => {
         no_index       => {directory => ['t']},
